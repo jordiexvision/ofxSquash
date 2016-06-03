@@ -10,13 +10,21 @@ namespace ofxSquash {
 		if (!initialized) {
 			string pluginDir = getPluginDir();
 			
+			pluginDir = ofToDataPath(pluginDir, true);
+
 			if (!ofDirectory(pluginDir).exists()) {
 				pluginDir = getPluginOriginDir();
 			}
 			
-			pluginDir = ofToDataPath(pluginDir);
-			
 			ofStringReplace(pluginDir, "\\", "/");
+
+			if (ofDirectory(pluginDir).exists()) {
+				cout << "found plugins folder at: " << pluginDir << endl;
+			}
+			else {
+				cout << "error: didn't find plugins folder!" << pluginDir << endl;
+			}
+
 			squash_set_default_search_path(pluginDir.c_str());
 			initialized = true;
 		}
@@ -24,7 +32,7 @@ namespace ofxSquash {
 
 	//----------
 	string getPluginDir() {
-		return "../plugins/squash";
+		return "plugins/squash";
 	}
 
 	//----------
